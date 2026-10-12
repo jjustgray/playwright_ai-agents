@@ -1,0 +1,26 @@
+{
+  "name": "playwright_ai-agents",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjustgray/playwright_ai-agents.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjustgray/playwright_ai-agents/issues"
+  },
+  "homepage": "https://github.com/jjustgray/playwright_ai-agents#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.5"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.7",
+    "playwright-qase-reporter": "^2.7.0"
+  }
+}

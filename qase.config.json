@@ -1,0 +1,18 @@
+{
+  "mode": "testops",
+  "debug": false,
+  "environment": "production",
+  "project": "VAL",
+  "uploadAttachments": true,
+  "report": {
+    "driver": "cucumber"
+  },
+  "testops": {
+    "api": {
+      "token": "YOUR_QASE_API_TOKEN"
+    },
+    "run": {
+      "complete": true
+    }
+  }
+}
