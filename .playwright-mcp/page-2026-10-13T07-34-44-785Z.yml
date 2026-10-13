@@ -1,0 +1,114 @@
+- generic [active] [ref=f1e1]:
+  - complementary [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - link [ref=f1e5] [cursor=pointer]:
+        - /url: https://valtive.io/
+        - img "Image" [ref=f1e6]
+      - generic [ref=f1e7]:
+        - heading "Contact Information" [level=2] [ref=f1e9]
+        - generic [ref=f1e10]: 
+        - generic [ref=f1e12]:
+          - generic [ref=f1e13]: 
+          - text: ceo@valtive.io
+          - generic [ref=f1e15]: 
+          - text: New Jersey, USA
+          - link "" [ref=f1e18] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/valtive
+      - generic [ref=f1e20]: 2026 TestSquad - All Rights Reserved.
+  - navigation [ref=f1e21]:
+    - generic [ref=f1e22]:
+      - link [ref=f1e24] [cursor=pointer]:
+        - /url: https://valtive.io/
+        - img "Image" [ref=f1e25]
+      - list [ref=f1e29]:
+        - listitem [ref=f1e30]:
+          - link "Home" [ref=f1e31] [cursor=pointer]:
+            - /url: https://valtive.io/
+        - listitem [ref=f1e32]:
+          - link "Our Testing Services" [ref=f1e33] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=f1e34]:
+          - link "Projects" [ref=f1e35] [cursor=pointer]:
+            - /url: https://valtive.io/projects/
+        - listitem [ref=f1e36]:
+          - link "About Us" [ref=f1e37] [cursor=pointer]:
+            - /url: https://valtive.io/about-valtive/
+        - listitem [ref=f1e38]:
+          - link "QA Pricing" [ref=f1e39] [cursor=pointer]:
+            - /url: https://valtive.io/qa-pricing/
+        - listitem [ref=f1e40]:
+          - link "Contact Us" [ref=f1e41] [cursor=pointer]:
+            - /url: https://valtive.io/contact-valtive/
+      - generic [ref=f1e43] [cursor=pointer]:
+        - generic [ref=f1e44]: 
+        - paragraph [ref=f1e45]: Get Free Quote
+  - banner [ref=f1e46]:
+    - generic [ref=f1e47]:
+      - heading "Contact Valtive" [level=1] [ref=f1e48]
+      - paragraph [ref=f1e49]:
+        - link "Home" [ref=f1e50] [cursor=pointer]:
+          - /url: https://valtive.io/
+        - generic [ref=f1e51]: 
+        - link "Projects" [ref=f1e52] [cursor=pointer]:
+          - /url: https://valtive.io/projects/
+  - generic [ref=f1e54]:
+    - generic [ref=f1e55]:
+      - heading "Get in Touch" [level=2] [ref=f1e56]
+      - generic [ref=f1e57]: We’d love to hear from you. Whether you have a question, feedback, or a project in mind—drop us a message or schedule a call with us!
+    - iframe [ref=f1e64]
+  - generic [ref=f1e69]:
+    - generic [ref=f1e70]:
+      - generic [ref=f1e72]:
+        - img "Anna, CEO" [ref=f1e74]
+        - blockquote [ref=f1e76]: "\" QA audit from Valtive showed wasted resources and gave clear steps - changes we already implemented."
+        - generic [ref=f1e77]: Anna, CEO
+      - text: "\" \" \" \""
+    - button "Previous" [ref=f1e78] [cursor=pointer]
+    - button "Next" [ref=f1e81] [cursor=pointer]
+    - list [ref=f1e84]:
+      - listitem [ref=f1e85] [cursor=pointer]
+      - listitem [ref=f1e86] [cursor=pointer]
+      - listitem [ref=f1e87] [cursor=pointer]
+      - listitem [ref=f1e88] [cursor=pointer]
+      - listitem [ref=f1e89] [cursor=pointer]
+  - contentinfo [ref=f1e94]:
+    - generic [ref=f1e96]:
+      - generic [ref=f1e97]:
+        - generic [ref=f1e98]: © 2026 Valtive OÜ
+        - generic [ref=f1e99]: All Rights Reserved
+      - generic [ref=f1e100]:
+        - generic [ref=f1e101]: Office Address
+        - generic [ref=f1e102]: Ukraine, Rivne
+        - generic [ref=f1e103]: Estonia, Tallinn
+      - generic [ref=f1e104]:
+        - generic [ref=f1e105]: Services
+        - link "Manual Testing" [ref=f1e108] [cursor=pointer]:
+          - /url: https://valtive.io/manual-testing/
+        - link "Automation Testing" [ref=f1e111] [cursor=pointer]:
+          - /url: https://valtive.io/automation-testing-services/
+        - link "API Testing" [ref=f1e114] [cursor=pointer]:
+          - /url: https://valtive.io/api-testing-services/
+        - link "QA Audit" [ref=f1e117] [cursor=pointer]:
+          - /url: https://valtive.io/quality-audit/
+      - generic [ref=f1e118]:
+        - generic [ref=f1e119]: Resources
+        - link "Case Studies" [ref=f1e122] [cursor=pointer]:
+          - /url: https://valtive.io/projects/
+        - link "Pricing" [ref=f1e125] [cursor=pointer]:
+          - /url: https://valtive.io/qa-pricing/
+      - generic [ref=f1e126]:
+        - generic [ref=f1e127]: Legal/Contact
+        - link "Terms of Service" [ref=f1e130] [cursor=pointer]:
+          - /url: https://valtive.io/terms-of-service-valtive/
+        - link "Privacy Policy" [ref=f1e133] [cursor=pointer]:
+          - /url: https://valtive.io/privacy-policy-valtive/
+        - link "Cookie Policy" [ref=f1e136] [cursor=pointer]:
+          - /url: https://valtive.io/cookie-policy-valtive/
+        - link "ceo@valtive.io" [ref=f1e139] [cursor=pointer]:
+          - /url: mailto:ceo@valtive.io
+      - generic [ref=f1e141]:
+        - generic [ref=f1e142]: Have second thoughts?
+        - link [ref=f1e143] [cursor=pointer]:
+          - /url: https://valtive.io/qa-services-free-trial/
+          - paragraph [ref=f1e144]: Ask Free Trial
+    - text: 

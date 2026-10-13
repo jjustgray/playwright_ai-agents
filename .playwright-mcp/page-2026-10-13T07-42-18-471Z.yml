@@ -1,0 +1,196 @@
+- generic [ref=f10e20]:
+  - link "powered by Calendly":
+    - /url: https://calendly.com/?utm_campaign=sign_up&utm_medium=badge&utm_source=invitee
+    - generic [ref=f10e21] [cursor=pointer]:
+      - generic [ref=f10e22]: powered by
+      - generic [ref=f10e23]: Calendly
+  - generic [ref=f10e25]:
+    - generic [ref=f10e31]:
+      - generic [ref=f10e32]:
+        - generic [ref=f10e33]: Valtive
+        - heading "30 Minute Meeting" [level=1] [ref=f10e34]
+      - generic [ref=f10e36]:
+        - generic [ref=f10e37]: 30 min
+        - generic [ref=f10e43]: Web conferencing details provided upon confirmation.
+    - generic [ref=f10e50]:
+      - button "Cookie settings" [ref=f10e52] [cursor=pointer]
+      - link "Privacy Policy" [ref=f10e54] [cursor=pointer]:
+        - /url: https://calendly.com/legal/privacy-notice
+  - generic [ref=f10e56]:
+    - heading "Select a Date & Time" [level=2] [ref=f10e59]
+    - generic [ref=f10e62]:
+      - generic [ref=f10e63]:
+        - generic [ref=f10e64]:
+          - button "Go to previous month" [ref=f10e158] [cursor=pointer]
+          - generic [aria-hidden] [ref=f10e162]: October 2026
+          - generic [ref=f10e163]: November 2026
+          - button "Go to next month" [active] [ref=f10e68] [cursor=pointer]
+          - status [ref=f10e72]: November is now displayed
+        - generic [ref=f10e73]:
+          - table "Select a Day" [ref=f10e74]:
+            - rowgroup [ref=f10e75]:
+              - row [ref=f10e76]:
+                - columnheader "Mon" [ref=f10e77]
+                - columnheader "Tue" [ref=f10e78]
+                - columnheader "Wed" [ref=f10e79]
+                - columnheader "Thu" [ref=f10e80]
+                - columnheader "Fri" [ref=f10e81]
+                - columnheader "Sat" [ref=f10e82]
+                - columnheader "Sun" [ref=f10e83]
+            - rowgroup [aria-hidden] [ref=f10e164]:
+              - row [ref=f10e165]:
+                - gridcell [ref=f10e166]
+                - gridcell [ref=f10e167]
+                - gridcell [ref=f10e168]
+                - gridcell [ref=f10e169]:
+                  - button [disabled]: "1"
+                - gridcell [ref=f10e170]:
+                  - button [disabled]: "2"
+                - gridcell [ref=f10e171]:
+                  - button [disabled]: "3"
+                - gridcell [ref=f10e172]:
+                  - button [disabled]: "4"
+              - row [ref=f10e173]:
+                - gridcell [ref=f10e174]:
+                  - button [disabled]: "5"
+                - gridcell [ref=f10e175]:
+                  - button [disabled]: "6"
+                - gridcell [ref=f10e176]:
+                  - button [disabled]: "7"
+                - gridcell [ref=f10e177]:
+                  - button [disabled]: "8"
+                - gridcell [ref=f10e178]:
+                  - button [disabled]: "9"
+                - gridcell [ref=f10e179]:
+                  - button [disabled]: "10"
+                - gridcell [ref=f10e180]:
+                  - button [disabled]: "11"
+              - row [ref=f10e181]:
+                - gridcell [ref=f10e182]:
+                  - button [disabled]: "12"
+                - gridcell [ref=f10e183]:
+                  - button [disabled]: "13"
+                - gridcell [ref=f10e184]:
+                  - button [disabled]: "14"
+                - gridcell [ref=f10e185]:
+                  - button [disabled]: "15"
+                - gridcell [ref=f10e186]:
+                  - button [disabled]: "16"
+                - gridcell [ref=f10e187]:
+                  - button [disabled]: "17"
+                - gridcell [ref=f10e188]:
+                  - button [disabled]: "18"
+              - row [ref=f10e189]:
+                - gridcell [ref=f10e190]:
+                  - button [disabled]: "19"
+                - gridcell [ref=f10e191]:
+                  - button [disabled]: "20"
+                - gridcell [ref=f10e192]:
+                  - button [disabled]: "21"
+                - gridcell [ref=f10e193]:
+                  - button [disabled]: "22"
+                - gridcell [ref=f10e194]:
+                  - button [disabled]: "23"
+                - gridcell [ref=f10e195]:
+                  - button [disabled]: "24"
+                - gridcell [ref=f10e196]:
+                  - button [disabled]: "25"
+              - row [ref=f10e197]:
+                - gridcell [ref=f10e198]:
+                  - button [disabled]: "26"
+                - gridcell [ref=f10e199]:
+                  - button [disabled]: "27"
+                - gridcell [ref=f10e200]:
+                  - button [disabled]: "28"
+                - gridcell [ref=f10e201]:
+                  - button [disabled]: "29"
+                - gridcell [ref=f10e202]:
+                  - button [disabled]: "30"
+                - gridcell [ref=f10e203]:
+                  - button [disabled]: "31"
+                - gridcell [ref=f10e204]
+            - rowgroup [ref=f10e205]:
+              - row [ref=f10e206]:
+                - gridcell [ref=f10e207]
+                - gridcell [ref=f10e208]
+                - gridcell [ref=f10e209]
+                - gridcell [ref=f10e210]
+                - gridcell [ref=f10e211]
+                - gridcell [ref=f10e212]
+                - gridcell "Sunday, November 1 - No times available" [ref=f10e213]:
+                  - button "Sunday, November 1 - No times available" [disabled]: "1"
+              - row [ref=f10e268]:
+                - gridcell [ref=f10e269]:
+                  - button "Monday, November 2 - Times available" [ref=f10e270] [cursor=pointer]: "2"
+                - gridcell [ref=f10e271]:
+                  - button "Tuesday, November 3 - Times available" [ref=f10e272] [cursor=pointer]: "3"
+                - gridcell [ref=f10e273]:
+                  - button "Wednesday, November 4 - Times available" [ref=f10e274] [cursor=pointer]: "4"
+                - gridcell [ref=f10e275]:
+                  - button "Thursday, November 5 - Times available" [ref=f10e276] [cursor=pointer]: "5"
+                - gridcell [ref=f10e277]:
+                  - button "Friday, November 6 - Times available" [ref=f10e278] [cursor=pointer]: "6"
+                - gridcell [ref=f10e279]:
+                  - button "Saturday, November 7 - Times available" [ref=f10e280] [cursor=pointer]: "7"
+                - gridcell "Sunday, November 8 - No times available" [ref=f10e221]:
+                  - button "Sunday, November 8 - No times available" [disabled]: "8"
+              - row [ref=f10e281]:
+                - gridcell [ref=f10e282]:
+                  - button "Monday, November 9 - Times available" [ref=f10e283] [cursor=pointer]: "9"
+                - gridcell [ref=f10e284]:
+                  - button "Tuesday, November 10 - Times available" [ref=f10e285] [cursor=pointer]: "10"
+                - gridcell [ref=f10e286]:
+                  - button "Wednesday, November 11 - Times available" [ref=f10e287] [cursor=pointer]: "11"
+                - gridcell [ref=f10e288]:
+                  - button "Thursday, November 12 - Times available" [ref=f10e289] [cursor=pointer]: "12"
+                - gridcell [ref=f10e290]:
+                  - button "Friday, November 13 - Times available" [ref=f10e291] [cursor=pointer]: "13"
+                - gridcell [ref=f10e292]:
+                  - button "Saturday, November 14 - Times available" [ref=f10e293] [cursor=pointer]: "14"
+                - gridcell "Sunday, November 15 - No times available" [ref=f10e229]:
+                  - button "Sunday, November 15 - No times available" [disabled]: "15"
+              - row [ref=f10e294]:
+                - gridcell [ref=f10e295]:
+                  - button "Monday, November 16 - Times available" [ref=f10e296] [cursor=pointer]: "16"
+                - gridcell [ref=f10e297]:
+                  - button "Tuesday, November 17 - Times available" [ref=f10e298] [cursor=pointer]: "17"
+                - gridcell [ref=f10e299]:
+                  - button "Wednesday, November 18 - Times available" [ref=f10e300] [cursor=pointer]: "18"
+                - gridcell [ref=f10e301]:
+                  - button "Thursday, November 19 - Times available" [ref=f10e302] [cursor=pointer]: "19"
+                - gridcell [ref=f10e303]:
+                  - button "Friday, November 20 - Times available" [ref=f10e304] [cursor=pointer]: "20"
+                - gridcell [ref=f10e305]:
+                  - button "Saturday, November 21 - Times available" [ref=f10e306] [cursor=pointer]: "21"
+                - gridcell "Sunday, November 22 - No times available" [ref=f10e237]:
+                  - button "Sunday, November 22 - No times available" [disabled]: "22"
+              - row [ref=f10e307]:
+                - gridcell [ref=f10e308]:
+                  - button "Monday, November 23 - Times available" [ref=f10e309] [cursor=pointer]: "23"
+                - gridcell [ref=f10e310]:
+                  - button "Tuesday, November 24 - Times available" [ref=f10e311] [cursor=pointer]: "24"
+                - gridcell [ref=f10e312]:
+                  - button "Wednesday, November 25 - Times available" [ref=f10e313] [cursor=pointer]: "25"
+                - gridcell [ref=f10e314]:
+                  - button "Thursday, November 26 - Times available" [ref=f10e315] [cursor=pointer]: "26"
+                - gridcell [ref=f10e316]:
+                  - button "Friday, November 27 - Times available" [ref=f10e317] [cursor=pointer]: "27"
+                - gridcell [ref=f10e318]:
+                  - button "Saturday, November 28 - Times available" [ref=f10e319] [cursor=pointer]: "28"
+                - gridcell "Sunday, November 29 - No times available" [ref=f10e245]:
+                  - button "Sunday, November 29 - No times available" [disabled]: "29"
+              - row [ref=f10e320]:
+                - gridcell [ref=f10e321]:
+                  - button "Monday, November 30 - Times available" [ref=f10e322] [cursor=pointer]: "30"
+                - gridcell [ref=f10e248]
+                - gridcell [ref=f10e249]
+                - gridcell [ref=f10e250]
+                - gridcell [ref=f10e251]
+                - gridcell [ref=f10e252]
+                - gridcell [ref=f10e253]
+          - status [ref=f10e139]
+      - generic [ref=f10e141]:
+        - paragraph [ref=f10e142]: Time zone
+        - button "Time zone Eastern European Time (10:42)" [ref=f10e144] [cursor=pointer]:
+          - generic [ref=f10e150]: Eastern European Time
+          - generic [ref=f10e151]: (10:42)

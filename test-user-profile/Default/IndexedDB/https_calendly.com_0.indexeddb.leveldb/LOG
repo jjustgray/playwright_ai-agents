@@ -1,0 +1,36 @@
+2026/10/13-17:41:22.550 18f4 Reusing MANIFEST C:\Users\Administrator\Desktop\projects\playwright_ai-agents\test-user-profile\Default\IndexedDB\https_calendly.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/10/13-17:41:22.552 18f4 Recovering log #252
+2026/10/13-17:41:22.633 18f4 Reusing old log C:\Users\Administrator\Desktop\projects\playwright_ai-agents\test-user-profile\Default\IndexedDB\https_calendly.com_0.indexeddb.leveldb/000252.log 
+2026/10/13-17:41:24.303 135c Level-0 table #266: started
+2026/10/13-17:41:24.355 135c Level-0 table #266: 1617218 bytes OK
+2026/10/13-17:41:24.358 135c Delete type=0 #252
+2026/10/13-17:41:25.439 135c Compacting 1@0 + 0@1 files
+2026/10/13-17:41:25.542 135c Generated table #267@0: 5024 keys, 1456269 bytes
+2026/10/13-17:41:25.543 135c Compacted 1@0 + 0@1 files => 1456269 bytes
+2026/10/13-17:41:25.545 135c compacted to: files[ 0 1 10 0 0 0 0 ]
+2026/10/13-17:41:25.545 135c Delete type=2 #266
+2026/10/13-17:41:26.436 135c Compacting 1@1 + 10@2 files
+2026/10/13-17:41:26.535 135c Generated table #268@1: 1204 keys, 2146297 bytes
+2026/10/13-17:41:26.677 135c Generated table #269@1: 1054 keys, 2149325 bytes
+2026/10/13-17:41:26.769 135c Generated table #270@1: 1029 keys, 2147720 bytes
+2026/10/13-17:41:26.843 135c Generated table #271@1: 1025 keys, 2147958 bytes
+2026/10/13-17:41:26.918 135c Generated table #272@1: 1031 keys, 2147438 bytes
+2026/10/13-17:41:26.995 135c Generated table #273@1: 1047 keys, 2145820 bytes
+2026/10/13-17:41:27.075 135c Generated table #274@1: 1066 keys, 2149577 bytes
+2026/10/13-17:41:27.142 135c Generated table #275@1: 1057 keys, 2147263 bytes
+2026/10/13-17:41:27.249 135c Generated table #276@1: 11220 keys, 2161792 bytes
+2026/10/13-17:41:27.482 135c Generated table #277@1: 30119 keys, 2222359 bytes
+2026/10/13-17:41:27.587 135c Generated table #278@1: 12362 keys, 964295 bytes
+2026/10/13-17:41:27.587 135c Compacted 1@1 + 10@2 files => 22529844 bytes
+2026/10/13-17:41:27.588 135c compacted to: files[ 0 0 11 0 0 0 0 ]
+2026/10/13-17:41:27.589 135c Delete type=2 #254
+2026/10/13-17:41:27.589 135c Delete type=2 #255
+2026/10/13-17:41:27.589 135c Delete type=2 #256
+2026/10/13-17:41:27.589 135c Delete type=2 #257
+2026/10/13-17:41:27.589 135c Delete type=2 #258
+2026/10/13-17:41:27.589 135c Delete type=2 #259
+2026/10/13-17:41:27.589 135c Delete type=2 #260
+2026/10/13-17:41:27.589 135c Delete type=2 #261
+2026/10/13-17:41:27.589 135c Delete type=2 #262
+2026/10/13-17:41:27.589 135c Delete type=2 #263
+2026/10/13-17:41:27.589 135c Delete type=2 #267

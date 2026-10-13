@@ -1,4 +1,7 @@
-
+.vscode/
+.playwright-mcp/
+test-user-profile/
+.env
 
 # Playwright
 node_modules/
