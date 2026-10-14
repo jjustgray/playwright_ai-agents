@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 export default defineConfig({
@@ -13,12 +14,22 @@ export default defineConfig({
   workers: 1,
   reporter: [
     ['html'],
-    ['playwright-qase-reporter', {
-      apiToken: process.env.QASE_API_TOKEN,
-      projectCode: 'VAL',
-      runComplete: true,
-      basePath: 'https://api.qase.io/v1',
-    }]
+    [
+      'playwright-qase-reporter',
+      {
+        mode: 'testops',
+        testops: {
+          project: 'VAL',
+          api: {
+            token: process.env.QASE_API_TOKEN,
+          },
+          run: {
+            complete: true,
+          },
+          rootSuiteTitle: 'Playwright Automated Tests',
+        },
+      },
+    ],
   ],
   use: {
     baseURL: process.env.BASE_URL || 'https://valtive.io',
@@ -31,6 +42,6 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    }
+    },
   ],
 });
