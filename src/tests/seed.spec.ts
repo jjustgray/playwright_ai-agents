@@ -1,9 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from '../fixtures/calendly';
 
-test('seed: open valtive and reach calendly', async ({ page }) => {
-  await page.goto('https://valtive.io/contact-valtive/');
+test('seed: open valtive and reach calendly', async ({ calendly }) => {
+  await calendly.open();
 
-  const calendlyFrame = page.frameLocator('iframe[src*="calendly"]');
-  await expect(calendlyFrame.getByRole('heading', { name: '30 Minute Meeting' })).toBeVisible();
-  await expect(calendlyFrame.getByRole('heading', { name: 'Select a Day' })).toBeVisible();
+  await expect(calendly.meetingHeading).toBeVisible();
+  await expect(calendly.daySelectorHeading).toBeVisible();
+  await expect(calendly.calendarTable).toBeVisible();
+  await expect(calendly.displayedMonthStatus).toBeVisible();
 });
