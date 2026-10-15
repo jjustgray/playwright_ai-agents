@@ -1,5 +1,8 @@
 import { expect } from '@playwright/test';
+import { runtimeEnv } from '../fixtures/helpers';
 import { test } from '../fixtures/calendly';
+
+test.skip(runtimeEnv.CI === 'true', 'Manual CAPTCHA verification requires a headed browser.');
 
 test('Manually solve CAPTCHA and verify booking confirmation', async ({ calendly, bookingEmail }) => {
   await calendly.open();

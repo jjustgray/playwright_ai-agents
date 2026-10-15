@@ -3,6 +3,7 @@
 This repository contains Playwright end-to-end tests for the Valtive meeting booking page. The main test suite exercises the Calendly widget: it discovers available dates and times, selects unique time slots, fills in invitee details, and checks whether submission results in a booking confirmation or a CAPTCHA. A separate smoke test is intended for manually solving a CAPTCHA.
 
 Tests are located in `src/tests/`, and Playwright is configured in `playwright.config.ts`. Tests run in Chromium and use a persistent browser profile in `test-user-profile/`.
+The browser runs headless in GitHub Actions and with a visible window locally. The manual CAPTCHA smoke test is skipped in CI because it requires user interaction.
 
 ## Requirements
 

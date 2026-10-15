@@ -24,7 +24,7 @@ export function buildBookingEmail(iterationIndex: number): string {
 export async function createPersistentBrowserContext(): Promise<BrowserContext> {
   const userDataDir = join(process.cwd(), 'test-user-profile');
   return chromium.launchPersistentContext(userDataDir, {
-    headless: false,
+    headless: runtimeEnv.CI === 'true',
     viewport: { width: 1280, height: 800 },
     args: [
       '--disable-blink-features=AutomationControlled',
