@@ -1,5 +1,4 @@
 import { expect } from '@playwright/test';
-import { liveBookingsEnabled, runtimeEnv } from '../fixtures/helpers';
 import { test } from '../fixtures/calendly';
 
 test('Manually solve CAPTCHA and verify booking confirmation', async ({ calendly, bookingEmail }) => {
