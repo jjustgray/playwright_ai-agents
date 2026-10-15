@@ -2,8 +2,7 @@ import { test as base, type BrowserContext } from '@playwright/test';
 import { CalendlyBookingPage } from '../pages/CalendlyBookingPage';
 import {
   buildBookingEmail,
-  createPersistentBrowserContext,
-  liveBookingsEnabled,
+  createPersistentBrowserContext
 } from './helpers';
 
 export type BookingFixtures = {
@@ -30,5 +29,3 @@ export const test = base.extend<BookingFixtures>({
     await use((iterationIndex) => buildBookingEmail(iterationIndex));
   },
 });
-
-export { liveBookingsEnabled };

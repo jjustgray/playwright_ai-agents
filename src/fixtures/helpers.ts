@@ -5,8 +5,6 @@ export const runtimeEnv = (globalThis as typeof globalThis & {
   process?: { env?: Record<string, string | undefined> };
 }).process?.env ?? {};
 
-export const liveBookingsEnabled = runtimeEnv.RUN_LIVE_CALENDLY_BOOKINGS === '1';
-
 export function buildBookingEmail(iterationIndex: number): string {
   const configuredEmail = runtimeEnv.CALENDLY_TEST_EMAIL;
   if (!configuredEmail) {
