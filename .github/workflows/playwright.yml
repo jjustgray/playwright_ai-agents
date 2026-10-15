@@ -77,3 +77,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Show Page URL
+        run: |
+          echo "=========================================="
+          echo "Playwright HTML Report deployed successfully!"
+          echo "URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "=========================================="
