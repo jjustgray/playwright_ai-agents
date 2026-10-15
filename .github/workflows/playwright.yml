@@ -4,13 +4,11 @@ on:
   push:
     branches: [ main, master ]
 
-# Настройки разрешений, необходимые для GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Разрешаем только один параллельный деплой
 concurrency:
   group: "pages"
   cancel-in-progress: false

@@ -7,7 +7,7 @@ test.describe('Valtive dynamic 40-slot booking submissions', () => {
   test.describe.configure({ mode: 'serial' });
 
   for (let iterationIndex = 1; iterationIndex <= 40; iterationIndex++) {
-    test(`Booking attempt ${iterationIndex}: accepts CAPTCHA or scheduled confirmation`, async ({
+    test(`Booking test ${iterationIndex}: accepts CAPTCHA or scheduled confirmation`, async ({
       calendly,
       bookingEmail,
     }) => {
