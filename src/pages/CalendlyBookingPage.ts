@@ -74,13 +74,16 @@ export class CalendlyBookingPage {
 
   private async availableDays(): Promise<Locator[]> {
     await this.waitForCalendarLoaderToDisappear();
-    const renderedCalendarDates = this.frame.getByRole('button', {
-      name: / - (?:No times available|Times available)$/,
-    });
-    await renderedCalendarDates.first().waitFor({ state: 'visible', timeout: 30_000 });
 
-    const days = this.frame.getByRole('button', { name: /Times available$/ });
-    return Promise.all(Array.from({ length: await days.count() }, (_, index) => days.nth(index)));
+    const days = this.frame.locator('div[role="grid"] button:not([disabled])');
+    await days.first().waitFor({ state: 'visible', timeout: 30_000 });
+
+    const count = await days.count();
+    const locators: Locator[] = [];
+    for (let i = 0; i < count; i++) {
+      locators.push(days.nth(i));
+    }
+    return locators;
   }
 
   private async availableTimeSlots(): Promise<Locator> {
