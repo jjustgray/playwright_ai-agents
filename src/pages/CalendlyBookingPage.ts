@@ -75,7 +75,9 @@ export class CalendlyBookingPage {
   private async availableDays(): Promise<Locator[]> {
     await this.waitForCalendarLoaderToDisappear();
 
-    const days = this.frame.locator('div[role="grid"] button:not([disabled])');
+    const days = this.frame
+      .getByRole('table', { name: 'Select a Day' })
+      .getByRole('button', { name: /Times available/ });
     await days.first().waitFor({ state: 'visible', timeout: 30_000 });
 
     const count = await days.count();
