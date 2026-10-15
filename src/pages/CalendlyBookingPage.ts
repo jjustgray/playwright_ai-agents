@@ -174,6 +174,7 @@ export class CalendlyBookingPage {
       await day.click();
 
       const slots = await this.availableTimeSlots();
+      await slots.first().waitFor({ state: 'visible', timeout: 10_000 });
       const totalAvailable = await slots.count();
       if (!totalAvailable) {
         await this.returnToCalendar();
