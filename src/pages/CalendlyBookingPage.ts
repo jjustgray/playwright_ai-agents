@@ -94,7 +94,7 @@ export class CalendlyBookingPage {
       return markedSlots;
     }
 
-    return this.frame.getByRole('button', { name: /^\d{1,2}:\d{2}$/ });
+    return this.frame.getByRole('button', { name: /^\d{1,2}:\d{2}\s*(am|pm)?$/i });
   }
 
   private async returnToCalendar(): Promise<void> {
