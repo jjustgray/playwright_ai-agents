@@ -79,9 +79,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Show Page URL
+      - name: Add Report Link to Summary
         run: |
-          echo "=========================================="
-          echo "Playwright HTML Report deployed successfully!"
-          echo "URL: ${{ steps.deployment.outputs.page_url }}"
-          echo "=========================================="
+          echo "### 📊 Playwright Test Report" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [Open HTML Report](https://jjustgray.github.io/playwright_ai-agents/)_ (or your deployed URL)" >> $GITHUB_STEP_SUMMARY
