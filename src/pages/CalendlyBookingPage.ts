@@ -4,6 +4,7 @@ export class CalendlyBookingPage {
   private static readonly embedSelector = 'iframe[src*="calendly.com/valtive-qa/30min"]';
   private static readonly meetingTitle = '30 Minute Meeting';
   private static readonly daySelectorTitle = 'Select a Day';
+  private static readonly bookingCannotBeCompletedTitle = 'This booking cannot be completed.';
   private readonly frame: FrameLocator;
   private readonly url = 'https://valtive.io/contact-valtive/';
 
@@ -49,6 +50,12 @@ export class CalendlyBookingPage {
 
   get invitationMessage(): Locator {
     return this.frame.getByText('A calendar invitation has been sent to your email address.');
+  }
+
+  get bookingCannotBeCompletedMessage(): Locator {
+    return this.frame.getByRole('heading', {
+      name: CalendlyBookingPage.bookingCannotBeCompletedTitle,
+    });
   }
 
   private async waitForCalendarLoaderToDisappear(): Promise<void> {
@@ -113,7 +120,7 @@ export class CalendlyBookingPage {
     throw new Error('Calendly did not update the displayed month in time.');
   }
 
-  private async waitForSubmissionOutcome(): Promise<'captcha' | 'scheduled'> {
+  private async waitForSubmissionOutcome(): Promise<'captcha' | 'scheduled' | 'booking-blocked'> {
     const captchaPrompt = this.frame.getByText(/Confirm you['’]re human/i);
     const captchaChallenge = this.frame.locator('iframe[title*="recaptcha" i][title*="challenge" i]');
     const deadline = Date.now() + 15_000;
@@ -121,6 +128,9 @@ export class CalendlyBookingPage {
     while (Date.now() < deadline) {
       if (await this.scheduledMessage.isVisible()) {
         return 'scheduled';
+      }
+      if (await this.bookingCannotBeCompletedMessage.isVisible()) {
+        return 'booking-blocked';
       }
       if (await captchaPrompt.isVisible() || (await captchaChallenge.isVisible())) {
         return 'captcha';
@@ -205,13 +215,13 @@ export class CalendlyBookingPage {
     throw new Error(`No unbooked unique time slot was available for iteration ${iterationIndex}.`);
   }
 
-  async submitAndDetectOutcome(): Promise<'captcha' | 'scheduled'> {
+  async submitAndDetectOutcome(): Promise<'captcha' | 'scheduled' | 'booking-blocked'> {
     await this.scheduleButton.scrollIntoViewIfNeeded();
     await this.scheduleButton.click();
     return this.waitForSubmissionOutcome();
   }
 
-  async submitAndWaitForManualCaptcha(): Promise<'captcha' | 'scheduled'> {
+  async submitAndWaitForManualCaptcha(): Promise<'captcha' | 'scheduled' | 'booking-blocked'> {
     const outcome = await this.submitAndDetectOutcome();
     if (outcome === 'captcha') {
       console.info(
