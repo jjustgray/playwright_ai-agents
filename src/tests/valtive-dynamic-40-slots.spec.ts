@@ -54,7 +54,6 @@ test.describe('Dynamic 40-slot booking', () => {
     bookingEmail,
     page,
   }) => {
-    test.skip(true, 'This test is disabled by default to avoid hitting Calendly rate limits.');
     test.setTimeout(15 * 60 * 1000);
 
     const attemptedSlots = new Set<string>();
