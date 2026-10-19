@@ -15,6 +15,7 @@ const qaseReporter = [
         token: process.env.QASE_API_TOKEN,
       },
       run: {
+        title: 'Playwright Automated Run',
         complete: true,
       },
       rootSuiteTitle: 'Playwright Automated Tests',

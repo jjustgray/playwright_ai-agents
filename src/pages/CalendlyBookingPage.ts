@@ -209,4 +209,24 @@ export class CalendlyBookingPage {
     await this.lastNameField.fill('Automation');
     await this.emailField.fill(email);
   }
+
+  async fillRandomlyInviteDetails(email: string): Promise<void> {
+    const fieldsList = [
+      'QA_manual_random',
+      'Automation',
+      email
+    ];
+    const fieldsLocators = [
+      this.firstNameField, 
+      this.lastNameField, 
+      this.emailField
+    ];
+
+    for (let i = 0; i < Object.keys(fieldsList).length; i++) {
+      for (const char of fieldsList[i]) {
+        const randomDelay = Math.floor(Math.random() * 50) + 100;
+        await fieldsLocators[i].press(char, { delay: randomDelay });
+      }
+    }
+  }
 }

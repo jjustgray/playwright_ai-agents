@@ -44,6 +44,7 @@ test(qase(2, 'Manually solve CAPTCHA and verify booking confirmation'), async ({
   await expect(calendly.scheduleButton).toBeVisible();
 
   await calendly.fillInviteeDetails(1, bookingEmail(1));
+  // await calendly.fillRandomlyInviteDetails(bookingEmail(2));
   const outcome = await calendly.submitAndWaitForManualCaptcha();
 
   expect(outcome).toBe('scheduled');
