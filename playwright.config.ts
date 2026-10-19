@@ -4,6 +4,23 @@ import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+const qaseReporter = [
+  'playwright-qase-reporter',
+  {
+    mode: 'testops',
+    testops: {
+      project: 'VAL',
+      api: {
+        token: process.env.QASE_API_TOKEN,
+      },
+      run: {
+        complete: true,
+      },
+      rootSuiteTitle: 'Playwright Automated Tests',
+    },
+  },
+] as const;
+
 export default defineConfig({
   testDir: './src/tests',
   timeout: 60 * 1000,
@@ -11,32 +28,16 @@ export default defineConfig({
     timeout: 10 * 1000,
   },
   fullyParallel: false,
-  retries: 1,
   workers: 1,
-  reporter: [
-    ['html'],
-    [
-      'playwright-qase-reporter',
-      {
-        mode: 'testops',
-        testops: {
-          project: 'VAL',
-          api: {
-            token: process.env.QASE_API_TOKEN,
-          },
-          run: {
-            complete: true,
-          },
-          rootSuiteTitle: 'Playwright Automated Tests',
-        },
-      },
-    ],
-  ],
+  reporter:
+    process.env.QASE_MODE === 'testops'
+      ? [['html'], qaseReporter]
+      : [['html']],
   use: {
     baseURL: process.env.BASE_URL || 'https://valtive.io',
-    trace: 'on-first-retry',
-    video: 'on',
-    screenshot: 'on',
+    trace: 'retain-on-failure',
+    video: 'retain-on-failure',
+    screenshot: 'only-on-failure',
     headless: process.env.CI ? true : false,
   },
   projects: [

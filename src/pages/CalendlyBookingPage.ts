@@ -1,4 +1,4 @@
-import { type FrameLocator, type Locator, type Page } from '@playwright/test';
+import { errors, type FrameLocator, type Locator, type Page } from '@playwright/test';
 
 export class CalendlyBookingPage {
   private static readonly embedSelector = 'iframe[src*="calendly.com/valtive-qa/30min"]';
@@ -6,69 +6,98 @@ export class CalendlyBookingPage {
   private static readonly daySelectorTitle = 'Select a Day';
   private static readonly bookingCannotBeCompletedTitle = 'This booking cannot be completed.';
   private readonly frame: FrameLocator;
-  private readonly url = 'https://valtive.io/contact-valtive/';
+  private readonly calendlyEmbed: Locator;
+  private readonly calendarLoader: Locator;
+  private readonly availableDayButtons: Locator;
+  private readonly visibleTimeSlots: Locator;
+  private readonly previousPageButton: Locator;
+  private readonly nextMonthButton: Locator;
+  private readonly monthAvailabilityButtons: Locator;
+  private readonly nextSlotButton: Locator;
+  private readonly captchaPrompt: Locator;
+  private readonly captchaChallenge: Locator;
+  private readonly submissionOutcome: Locator;
+  private currentDay: Locator;
+  private currentTimeSlot: Locator;
+  private monthStatusForPreviousValue: Locator;
+
+  readonly meetingHeading: Locator;
+  readonly daySelectorHeading: Locator;
+  readonly calendarTable: Locator;
+  readonly displayedMonthStatus: Locator;
+  readonly firstNameField: Locator;
+  readonly lastNameField: Locator;
+  readonly emailField: Locator;
+  readonly scheduleButton: Locator;
+  readonly scheduledMessage: Locator;
+  readonly invitationMessage: Locator;
+  readonly bookingCannotBeCompletedMessage: Locator;
 
   constructor(private readonly page: Page) {
     this.frame = page.frameLocator(CalendlyBookingPage.embedSelector);
-  }
-
-  get meetingHeading(): Locator {
-    return this.frame.getByRole('heading', { name: CalendlyBookingPage.meetingTitle });
-  }
-
-  get daySelectorHeading(): Locator {
-    return this.frame.getByRole('heading', { name: CalendlyBookingPage.daySelectorTitle });
-  }
-
-  get calendarTable(): Locator {
-    return this.frame.getByRole('table', { name: CalendlyBookingPage.daySelectorTitle });
-  }
-
-  get displayedMonthStatus(): Locator {
-    return this.frame.getByRole('status').filter({ hasText: /is now displayed/ });
-  }
-
-  get firstNameField(): Locator {
-    return this.frame.getByRole('textbox', { name: 'First name *' });
-  }
-
-  get lastNameField(): Locator {
-    return this.frame.getByRole('textbox', { name: 'Last name *' });
-  }
-
-  get emailField(): Locator {
-    return this.frame.getByRole('textbox', { name: 'Email *' });
-  }
-
-  get scheduleButton(): Locator {
-    return this.frame.getByRole('button', { name: 'Schedule Event' });
-  }
-
-  get scheduledMessage(): Locator {
-    return this.frame.getByText(/You are scheduled!?/);
-  }
-
-  get invitationMessage(): Locator {
-    return this.frame.getByText('A calendar invitation has been sent to your email address.');
-  }
-
-  get bookingCannotBeCompletedMessage(): Locator {
-    return this.frame.getByRole('heading', {
+    this.calendlyEmbed = page.locator(CalendlyBookingPage.embedSelector);
+    this.calendarLoader = this.frame.locator('[data-testid="calendar-loader"]');
+    this.meetingHeading = this.frame.getByRole('heading', {
+      name: CalendlyBookingPage.meetingTitle,
+    });
+    this.daySelectorHeading = this.frame.getByRole('heading', {
+      name: CalendlyBookingPage.daySelectorTitle,
+    });
+    this.calendarTable = this.frame.getByRole('table', {
+      name: CalendlyBookingPage.daySelectorTitle,
+    });
+    this.displayedMonthStatus = this.frame.getByRole('status').filter({
+      hasText: /is now displayed/,
+    });
+    this.availableDayButtons = this.calendarTable.getByRole('button', {
+      name: /Times available/,
+    });
+    this.currentDay = this.availableDayButtons;
+    this.firstNameField = this.frame.getByRole('textbox', { name: 'First name *' });
+    this.lastNameField = this.frame.getByRole('textbox', { name: 'Last name *' });
+    this.emailField = this.frame.getByRole('textbox', { name: 'Email *' });
+    this.scheduleButton = this.frame.getByRole('button', { name: 'Schedule Event' });
+    this.scheduledMessage = this.frame.getByText(/You are scheduled!?/);
+    this.invitationMessage = this.frame.getByText(
+      'A calendar invitation has been sent to your email address.',
+    );
+    this.bookingCannotBeCompletedMessage = this.frame.getByRole('heading', {
       name: CalendlyBookingPage.bookingCannotBeCompletedTitle,
     });
+    this.visibleTimeSlots = this.frame
+      .locator('[data-container="time-slot"]')
+      .or(this.frame.getByRole('button', { name: /^\d{1,2}:\d{2}\s*(am|pm)?$/i }))
+      .filter({ visible: true });
+    this.currentTimeSlot = this.visibleTimeSlots;
+    this.previousPageButton = this.frame.getByRole('button', {
+      name: 'Go to previous page',
+    });
+    this.nextMonthButton = this.frame.getByRole('button', { name: 'Go to next month' });
+    this.monthAvailabilityButtons = this.frame.getByRole('button', {
+      name: / - (?:No times available|Times available)$/,
+    });
+    this.nextSlotButton = this.frame.getByRole('button', { name: /^Next / });
+    this.captchaPrompt = this.frame.getByText(/Confirm you['’]re human/i);
+    this.captchaChallenge = this.frame.locator(
+      'iframe[title*="recaptcha" i][title*="challenge" i]',
+    );
+    this.submissionOutcome = this.scheduledMessage
+      .or(this.bookingCannotBeCompletedMessage)
+      .or(this.captchaPrompt)
+      .or(this.captchaChallenge)
+      .filter({ visible: true });
+    this.monthStatusForPreviousValue = this.displayedMonthStatus;
   }
 
   private async waitForCalendarLoaderToDisappear(): Promise<void> {
-    await this.frame.locator('[data-testid="calendar-loader"]').waitFor({
+    await this.calendarLoader.waitFor({
       state: 'hidden',
       timeout: 30_000,
     });
   }
 
-  async open(): Promise<void> {
-    await this.page.goto(this.url);
-    const calendlyEmbed = this.page.locator(CalendlyBookingPage.embedSelector);
-    await calendlyEmbed.scrollIntoViewIfNeeded();
+  async waitForWidget(): Promise<void> {
+    await this.calendlyEmbed.scrollIntoViewIfNeeded();
     await this.meetingHeading.waitFor({
       state: 'visible',
       timeout: 30_000,
@@ -79,140 +108,82 @@ export class CalendlyBookingPage {
     await this.displayedMonthStatus.waitFor({ state: 'visible' });
   }
 
-  private async availableDays(): Promise<Locator[]> {
+  async availableDayCount(): Promise<number> {
     await this.waitForCalendarLoaderToDisappear();
-
-    const days = this.frame
-      .getByRole('table', { name: 'Select a Day' })
-      .getByRole('button', { name: /Times available/ });
-    await days.first().waitFor({ state: 'visible', timeout: 30_000 });
-
-    const count = await days.count();
-    const locators: Locator[] = [];
-    for (let i = 0; i < count; i++) {
-      locators.push(days.nth(i));
-    }
-    return locators;
+    return this.availableDayButtons.count();
   }
 
-  private async availableTimeSlots(): Promise<Locator> {
-    const markedSlots = this.frame.locator('[data-container="time-slot"]');
-    if (await markedSlots.count()) {
-      return markedSlots;
+  async availableTimeSlotCount(): Promise<number> {
+    try {
+      await this.visibleTimeSlots.first().waitFor({ state: 'visible', timeout: 10_000 });
+    } catch (error) {
+      if (error instanceof errors.TimeoutError) {
+        return 0;
+      }
+      throw error;
     }
 
-    return this.frame.getByRole('button', { name: /^\d{1,2}:\d{2}\s*(am|pm)?$/i });
+    return this.visibleTimeSlots.count();
   }
 
-  private async returnToCalendar(): Promise<void> {
-    await this.frame.getByRole('button', { name: 'Go to previous page' }).click();
+  async returnToCalendar(): Promise<void> {
+    await this.previousPageButton.click();
     await this.daySelectorHeading.waitFor({ state: 'visible' });
   }
 
-  private async waitForTextChange(locator: Locator, previousText: string): Promise<void> {
-    const deadline = Date.now() + 30_000;
-    while (Date.now() < deadline) {
-      if ((await locator.innerText()) !== previousText) {
-        return;
-      }
-      await new Promise((resolve) => setTimeout(resolve, 100));
+  async goToNextMonth(): Promise<boolean> {
+    if (await this.nextMonthButton.isDisabled()) {
+      return false;
     }
-    throw new Error('Calendly did not update the displayed month in time.');
+
+    const previousMonthStatus = await this.displayedMonthStatus.innerText();
+    await this.nextMonthButton.scrollIntoViewIfNeeded();
+    await this.nextMonthButton.click();
+    this.monthStatusForPreviousValue = this.displayedMonthStatus.filter({
+      hasText: previousMonthStatus,
+    });
+    await this.monthStatusForPreviousValue.waitFor({ state: 'hidden', timeout: 30_000 });
+    await this.waitForCalendarLoaderToDisappear();
+    await this.monthAvailabilityButtons.first().waitFor({ state: 'visible', timeout: 30_000 });
+    return true;
+  }
+
+  async selectDay(index: number): Promise<string> {
+    this.currentDay = this.availableDayButtons.nth(index);
+    const dateLabel = await this.currentDay.getAttribute('aria-label');
+    if (!dateLabel) {
+      throw new Error('An available Calendly date has no accessible label.');
+    }
+
+    await this.currentDay.scrollIntoViewIfNeeded();
+    await this.currentDay.click();
+    return dateLabel;
+  }
+
+  async timeSlotLabel(index: number): Promise<string> {
+    return (await this.visibleTimeSlots.nth(index).innerText()).trim();
+  }
+
+  async selectTimeSlot(index: number): Promise<void> {
+    this.currentTimeSlot = this.visibleTimeSlots.nth(index);
+    await this.currentTimeSlot.click();
+  }
+
+  async continueToInviteeDetails(): Promise<void> {
+    await this.nextSlotButton.click();
   }
 
   private async waitForSubmissionOutcome(): Promise<'captcha' | 'scheduled' | 'booking-blocked'> {
-    const captchaPrompt = this.frame.getByText(/Confirm you['’]re human/i);
-    const captchaChallenge = this.frame.locator('iframe[title*="recaptcha" i][title*="challenge" i]');
-    const deadline = Date.now() + 15_000;
+    await this.submissionOutcome.first().waitFor({ state: 'visible', timeout: 15_000 });
 
-    while (Date.now() < deadline) {
-      if (await this.scheduledMessage.isVisible()) {
-        return 'scheduled';
-      }
-      if (await this.bookingCannotBeCompletedMessage.isVisible()) {
-        return 'booking-blocked';
-      }
-      if (await captchaPrompt.isVisible() || (await captchaChallenge.isVisible())) {
-        return 'captcha';
-      }
-      await new Promise((resolve) => setTimeout(resolve, 250));
+    if (await this.scheduledMessage.isVisible()) {
+      return 'scheduled';
+    }
+    if (await this.bookingCannotBeCompletedMessage.isVisible()) {
+      return 'booking-blocked';
     }
 
-    throw new Error('Calendly did not show a booking confirmation or a reCAPTCHA challenge in time.');
-  }
-
-  async selectNextUniqueSlot(
-    iterationIndex: number,
-    bookedSlots: Set<string>,
-  ): Promise<{ dateLabel: string; timeLabel: string } | null> {
-    let days = await this.availableDays();
-    let monthOffset = 0;
-
-    while (days.length === 0 && monthOffset < 12) {
-      const nextMonth = this.frame.getByRole('button', { name: 'Go to next month' });
-      if (await nextMonth.isDisabled()) {
-        break;
-      }
-
-      const monthStatus = this.displayedMonthStatus;
-      const previousMonthStatus = await monthStatus.innerText();
-      await nextMonth.scrollIntoViewIfNeeded();
-      await nextMonth.click();
-      await this.waitForTextChange(monthStatus, previousMonthStatus);
-      await this.waitForCalendarLoaderToDisappear();
-      await this.frame
-        .getByRole('button', { name: / - (?:No times available|Times available)$/ })
-        .first()
-        .waitFor({ state: 'visible', timeout: 30_000 });
-      monthOffset++;
-      days = await this.availableDays();
-    }
-
-    if (!days.length) {
-      return null;
-    }
-
-    for (let dayOffset = 0; dayOffset < days.length; dayOffset++) {
-      const dayIndex = (iterationIndex - 1 + dayOffset) % days.length;
-      const day = days[dayIndex];
-      const dateLabel = await day.getAttribute('aria-label');
-      if (!dateLabel) {
-        throw new Error('An available Calendly date has no accessible label.');
-      }
-
-      await day.scrollIntoViewIfNeeded();
-      await day.click();
-
-      const slots = await this.availableTimeSlots();
-      await slots.first().waitFor({ state: 'visible', timeout: 10_000 });
-      const totalAvailable = await slots.count();
-      if (!totalAvailable) {
-        await this.returnToCalendar();
-        continue;
-      }
-
-      const slotIndex = (iterationIndex - 1) % totalAvailable;
-      const slot = slots.nth(slotIndex);
-      const timeLabel = (await slot.innerText()).trim();
-      const uniqueSlotKey = `${dateLabel}|${timeLabel}`;
-
-      if (bookedSlots.has(uniqueSlotKey)) {
-        await this.returnToCalendar();
-        continue;
-      }
-
-      await slot.click();
-
-      const nextButton = this.frame.getByRole('button', { name: `Next ${timeLabel}` });
-      await nextButton.click();
-      await this.firstNameField.waitFor({ state: 'visible', timeout: 30_000 });
-      await this.lastNameField.waitFor({ state: 'visible', timeout: 30_000 });
-      await this.emailField.waitFor({ state: 'visible', timeout: 30_000 });
-      await this.scheduleButton.waitFor({ state: 'visible', timeout: 30_000 });
-      return { dateLabel, timeLabel };
-    }
-
-    throw new Error(`No unbooked unique time slot was available for iteration ${iterationIndex}.`);
+    return 'captcha';
   }
 
   async submitAndDetectOutcome(): Promise<'captcha' | 'scheduled' | 'booking-blocked'> {
@@ -234,29 +205,8 @@ export class CalendlyBookingPage {
   }
 
   async fillInviteeDetails(iterationIndex: number, email: string): Promise<void> {
-    const fields = [
-      {
-        field: this.frame.getByRole('textbox', { name: 'First name *' }),
-        value: `QA${iterationIndex}`,
-      },
-      {
-        field: this.frame.getByRole('textbox', { name: 'Last name *' }),
-        value: 'Automation',
-      },
-      {
-        field: this.frame.getByRole('textbox', { name: 'Email *' }),
-        value: email,
-      },
-    ];
-
-    for (const { field, value } of fields) {
-      await field.scrollIntoViewIfNeeded();
-      await field.click();
-      
-      for (const char of value) {
-        const randomDelay = Math.max(50, Math.floor(Math.random() * 151));
-        await field.press(char, { delay: randomDelay });
-      }
-    }
+    await this.firstNameField.fill(`QA${iterationIndex}`);
+    await this.lastNameField.fill('Automation');
+    await this.emailField.fill(email);
   }
 }

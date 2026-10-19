@@ -1,13 +1,10 @@
 name: Playwright AI Agents CI
 
 on:
-  push:
-    branches: [ main, master ]
+  workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -18,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: 'npm'
@@ -30,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Cache Playwright Browsers
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -38,20 +35,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      - name: Install Playwright system dependencies
+        run: npx playwright install-deps chromium
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
 
       - name: Run Playwright Tests & Send to Qase
         env:
+          QASE_MODE: ${{ vars.QASE_MODE }}
           QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}
-          BASE_URL: ${{ secrets.BASE_URL }}
-          CALENDLY_TEST_EMAIL: ${{ secrets.CALENDLY_TEST_EMAIL }}
+          BASE_URL: ${{ vars.BASE_URL }}
+          CALENDLY_TEST_EMAIL: ${{ vars.CALENDLY_TEST_EMAIL }}
         run: npx playwright test
         continue-on-error: true
 
       - name: Upload Video Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-videos-and-reports
@@ -60,12 +61,8 @@ jobs:
             playwright-report/
           retention-days: 30
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        if: always()
-
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         if: always()
         with:
           path: playwright-report/
@@ -73,13 +70,21 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: always()
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
     steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       - name: Add Report Link to Summary
         run: |
           echo "### 📊 Playwright Test Report" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 [Open HTML Report](https://jjustgray.github.io/playwright_ai-agents/)_ (or your deployed URL)" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [Open HTML Report](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY

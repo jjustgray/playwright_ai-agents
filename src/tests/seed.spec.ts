@@ -1,8 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/calendly';
 
-test('seed: open valtive and reach calendly', async ({ calendly }) => {
-  await calendly.open();
+test('seed: open valtive and reach calendly', async ({ calendly, valtiveContact }) => {
+  await valtiveContact.open();
+  await calendly.waitForWidget();
 
   await expect(calendly.meetingHeading).toBeVisible();
   await expect(calendly.daySelectorHeading).toBeVisible();
