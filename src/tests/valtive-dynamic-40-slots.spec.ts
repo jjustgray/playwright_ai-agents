@@ -1,5 +1,4 @@
 import { expect } from '@playwright/test';
-import { qase } from 'playwright-qase-reporter';
 import type { CalendlyBookingPage } from '../pages/CalendlyBookingPage';
 import { test } from '../fixtures/calendly';
 
@@ -48,7 +47,7 @@ async function selectNextUniqueSlot(
   return null;
 }
 
-test(qase(123, 'Books 40 unique Valtive slots and confirms each invitation'), async ({
+test('Books 40 unique Valtive slots and confirms each invitation', async ({
   calendly,
   valtiveContact,
   bookingEmail,
