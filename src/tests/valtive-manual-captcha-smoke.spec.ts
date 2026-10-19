@@ -1,10 +1,11 @@
 import { expect } from '@playwright/test';
+import { qase } from 'playwright-qase-reporter';
 import { runtimeEnv } from '../fixtures/helpers';
 import { test } from '../fixtures/calendly';
 
 test.skip(runtimeEnv.CI === 'true', 'Manual CAPTCHA verification requires a headed browser.');
 
-test('Manually solve CAPTCHA and verify booking confirmation', async ({
+test(qase(2, 'Manually solve CAPTCHA and verify booking confirmation'), async ({
   calendly,
   valtiveContact,
   bookingEmail,

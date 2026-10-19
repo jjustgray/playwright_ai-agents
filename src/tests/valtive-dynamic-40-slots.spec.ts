@@ -1,6 +1,9 @@
 import { expect } from '@playwright/test';
+import { qase } from 'playwright-qase-reporter';
 import type { CalendlyBookingPage } from '../pages/CalendlyBookingPage';
 import { test } from '../fixtures/calendly';
+
+class BookingAttemptBlockedError extends Error {}
 
 async function selectNextUniqueSlot(
   calendly: CalendlyBookingPage,
@@ -45,7 +48,7 @@ async function selectNextUniqueSlot(
   return null;
 }
 
-test('Books 40 unique Valtive slots and confirms each invitation', async ({
+test(qase(123, 'Books 40 unique Valtive slots and confirms each invitation'), async ({
   calendly,
   valtiveContact,
   bookingEmail,
@@ -68,14 +71,14 @@ test('Books 40 unique Valtive slots and confirms each invitation', async ({
       const selected = await selectNextUniqueSlot(calendly, iterationIndex, attemptedSlots);
       if (selected === null) {
         noSlotsAvailable = true;
-        console.log(
-          `Booking attempt ${iterationIndex}: did not succeed — no unique slot was available.`,
-        );
-        test.info().annotations.push({
-          type: 'booking-blocker',
-          description: `No unique slot was available for attempt ${iterationIndex}.`,
+        const message =
+          `Booking attempt ${iterationIndex}: did not succeed — no unique slot was available.`;
+        console.log(message);
+        test.info().annotations.push({ type: 'booking-blocker', description: message });
+        await test.step('Result: no unique slot available', async () => {
+          throw new BookingAttemptBlockedError(message);
         });
-        return;
+        throw new BookingAttemptBlockedError(message);
       }
 
       const slotKey = `${selected.dateLabel}|${selected.timeLabel}`;
@@ -91,12 +94,11 @@ test('Books 40 unique Valtive slots and confirms each invitation', async ({
       if (outcome === 'captcha') {
         const message = `Booking attempt ${iterationIndex}: did not succeed — CAPTCHA.`;
         console.log(message);
-        blockedOutcomes.push(message);
-        test.info().annotations.push({
-          type: 'booking-blocker',
-          description: blockedOutcomes[blockedOutcomes.length - 1],
+        test.info().annotations.push({ type: 'booking-blocker', description: message });
+        await test.step('Result: blocked by CAPTCHA', async () => {
+          throw new BookingAttemptBlockedError(message);
         });
-        return;
+        throw new BookingAttemptBlockedError(message);
       }
       if (outcome === 'booking-blocked') {
         await expect(calendly.bookingCannotBeCompletedMessage).toBeVisible();
@@ -104,12 +106,11 @@ test('Books 40 unique Valtive slots and confirms each invitation', async ({
           `Booking attempt ${iterationIndex}: did not succeed — ` +
           `Calendly showed "This booking cannot be completed."`;
         console.log(message);
-        blockedOutcomes.push(message);
-        test.info().annotations.push({
-          type: 'booking-blocker',
-          description: blockedOutcomes[blockedOutcomes.length - 1],
+        test.info().annotations.push({ type: 'booking-blocker', description: message });
+        await test.step('Result: Calendly blocked the booking', async () => {
+          throw new BookingAttemptBlockedError(message);
         });
-        return;
+        throw new BookingAttemptBlockedError(message);
       }
 
       await test.step(
@@ -123,6 +124,11 @@ test('Books 40 unique Valtive slots and confirms each invitation', async ({
           confirmedSlots.add(slotKey);
         },
       );
+    }).catch((error: unknown) => {
+      if (!(error instanceof BookingAttemptBlockedError)) {
+        throw error;
+      }
+      blockedOutcomes.push(error.message);
     });
 
     if (noSlotsAvailable) {
@@ -130,9 +136,8 @@ test('Books 40 unique Valtive slots and confirms each invitation', async ({
     }
   }
 
-  if (blockedOutcomes.length > 0) {
-    test.fail(true, 'One or more booking attempts were blocked.');
-  }
-
-  expect(confirmedSlots.size).toBe(40);
+  expect(
+    confirmedSlots.size,
+    `${blockedOutcomes.length} booking attempts were blocked or could not find a slot.`,
+  ).toBe(40);
 });
