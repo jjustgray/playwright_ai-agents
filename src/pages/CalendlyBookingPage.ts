@@ -210,6 +210,12 @@ export class CalendlyBookingPage {
     await this.emailField.fill(email);
   }
 
+  async centerInviteeForm(): Promise<void> {
+    await this.firstNameField.evaluate((element) => {
+      element.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
+    });
+  }
+
   async fillRandomlyInviteDetails(email: string): Promise<void> {
     const fieldsList = [
       'QA_manual_random',

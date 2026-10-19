@@ -10,7 +10,7 @@ const qaseReporter = [
     mode: 'testops',
     testops: {
       project: 'VAL',
-      uploadAttachments: true,
+      uploadAttachments: true, 
       api: {
         token: process.env.QASE_API_TOKEN,
       },
@@ -37,10 +37,28 @@ export default defineConfig({
       : [['html']],
   use: {
     baseURL: process.env.BASE_URL || 'https://valtive.io',
-    trace: 'retain-on-failure',
-    video: 'retain-on-failure',
     screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    trace: 'retain-on-failure',
+    
     headless: process.env.CI ? true : false,
+
+    channel: 'chrome',
+
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    locale: 'en-US',
+    timezoneId: 'Europe/Kyiv',
+    viewport: { width: 1920, height: 1080 },
+
+    launchOptions: {
+      args: [
+        '--disable-blink-features=AutomationControlled', 
+        '--disable-features=IsolateOrigins,site-per-process',
+        '--no-sandbox',
+        '--disable-infobars',
+      ],
+      ignoreDefaultArgs: ['--enable-automation'],
+    },
   },
   projects: [
     {
