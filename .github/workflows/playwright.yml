@@ -13,6 +13,8 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    outputs:
+      qase_run_url: ${{ steps.playwright.outputs.qase_run_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -43,12 +45,26 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
 
       - name: Run Playwright Tests & Send to Qase
+        id: playwright
         env:
           QASE_MODE: ${{ vars.QASE_MODE }}
           QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}
           BASE_URL: ${{ vars.BASE_URL }}
           CALENDLY_TEST_EMAIL: ${{ vars.CALENDLY_TEST_EMAIL }}
-        run: npx playwright test
+        run: |
+          set +e
+          npx playwright test 2>&1 | tee "$RUNNER_TEMP/playwright-output.log"
+          test_status=${PIPESTATUS[0]}
+          set -e
+
+          if [[ "$QASE_MODE" == "testops" ]]; then
+            qase_run_url=$(grep -oE 'https://app\.qase\.io/run/VAL/dashboard/[0-9]+' "$RUNNER_TEMP/playwright-output.log" | tail -n 1 || true)
+            if [[ -n "$qase_run_url" ]]; then
+              echo "qase_run_url=$qase_run_url" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+          exit "$test_status"
         continue-on-error: true
 
       - name: Upload Video Artifacts
@@ -88,3 +104,7 @@ jobs:
         run: |
           echo "### 📊 Playwright Test Report" >> $GITHUB_STEP_SUMMARY
           echo "🔗 [Open HTML Report](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY
+
+      - name: Add Qase Run Link to Summary
+        if: needs.test.outputs.qase_run_url != ''
+        run: echo "🔗 [Open Qase Run](${{ needs.test.outputs.qase_run_url }})" >> $GITHUB_STEP_SUMMARY

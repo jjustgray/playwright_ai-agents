@@ -75,7 +75,7 @@ The workflow uploads `test-results/` and `playwright-report/` as the `test-video
 
 ## Reports and artifacts
 
-The published [GitHub Pages report](https://jjustgray.github.io/playwright_ai-agents/) is updated by a manual workflow run. Qase results are available in the [VAL project](https://app.qase.io/project/VAL) when Qase reporting is enabled. Playwright's HTML reporter writes to `playwright-report/`; failed-test traces, videos, screenshots, and other artifacts are written to `test-results/`. Open the HTML report locally with:
+The published [GitHub Pages report](https://jjustgray.github.io/playwright_ai-agents/) is updated by a manual workflow run. When Qase reporting is enabled and the run is created, the workflow summary also links directly to that Qase run. Qase results are available in the [VAL project](https://app.qase.io/project/VAL). Playwright's HTML reporter writes to `playwright-report/`; failed-test traces, videos, screenshots, and other artifacts are written to `test-results/`. Open the HTML report locally with:
 
 ```bash
 npx playwright show-report
