@@ -71,7 +71,7 @@ Configure these repository Actions settings:
 - Repository secret `QASE_API_TOKEN` — publishes results to Qase TestOps project `VAL`.
 - Repository variable `CALENDLY_TEST_EMAIL` — controlled test inbox required for booking attempts.
 
-The workflow uploads `test-results/` and `playwright-report/` as the `test-videos-and-reports` artifact, even when tests fail. Artifacts are retained for 30 days.
+The workflow uploads `test-results/` and `playwright-report/` as the `test-videos-and-reports` artifact, even when tests fail. Artifacts are retained for 30 days. Qase attachment uploads are enabled; Playwright's failure-only video and screenshot artifacts are passed through by the Qase reporter, and the dynamic test also attaches a final failure screenshot.
 
 ## Reports and artifacts
 

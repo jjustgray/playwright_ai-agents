@@ -10,6 +10,7 @@ const qaseReporter = [
     mode: 'testops',
     testops: {
       project: 'VAL',
+      uploadAttachments: true,
       api: {
         token: process.env.QASE_API_TOKEN,
       },

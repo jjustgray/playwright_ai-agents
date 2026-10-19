@@ -51,6 +51,7 @@ test('Books 40 unique Valtive slots and confirms each invitation', async ({
   calendly,
   valtiveContact,
   bookingEmail,
+  page,
 }) => {
   test.setTimeout(15 * 60 * 1000);
 
@@ -133,6 +134,13 @@ test('Books 40 unique Valtive slots and confirms each invitation', async ({
     if (noSlotsAvailable) {
       break;
     }
+  }
+
+  if (confirmedSlots.size !== 40) {
+    await test.info().attach('booking-run-failure.png', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   }
 
   expect(
